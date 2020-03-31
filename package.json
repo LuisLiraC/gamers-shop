@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/joi": "^17.1.1",
+    "@sentry/node": "^5.15.4",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongodb": "^3.5.5",
     "pug": "^2.0.4"
   },
   "devDependencies": {
