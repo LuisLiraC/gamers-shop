@@ -18,10 +18,10 @@ function logErrors(err, req, res, next) {
 
 function wrapErrors(err, req, res, next) {
   if (!err.isBoom) {
-    next(boom.badImplementation(err))
+    return next(boom.badImplementation(err))
   }
 
-  next(err)
+  return next(err)
 }
 
 function clientErrorHandler(err, req, res, next) {
@@ -30,9 +30,9 @@ function clientErrorHandler(err, req, res, next) {
   } = err
 
   if (isRequestAjaxOrApi(req) || res.headersSent) {
-    res.status(statusCode).json(withErrorStack(payload, err.stack))
+    return res.status(statusCode).json(withErrorStack(payload, err.stack))
   } else {
-    next(err)
+    return next(err)
   }
 }
 
@@ -41,8 +41,7 @@ function errorHandler(err, req, res, next) {
     output: { statusCode, payload }
   } = err
 
-  res.status(statusCode)
-  res.render("error", withErrorStack(payload, err.stack))
+  return res.status(statusCode).render("error", withErrorStack(payload, err.stack))
 }
 
 module.exports = {
