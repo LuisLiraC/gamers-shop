@@ -1,7 +1,7 @@
 extends layout.pug
 
 block viewStyles
-  link(rel="stylesheet", href="/static/css/products.css")
+  link(rel="stylesheet", href=`/static/css/products${dev ? '.css' : '.min.css'}`)
 
 block hero
   section.products.grey.darken-4

@@ -5,7 +5,7 @@ head
   title Gamers shop
   link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
-  link(rel='stylesheet' href='/static/css/index.css')
+  link(rel='stylesheet' href=`/static/css/index${dev ? '.css' : '.min.css'}`)
 
 body
   include navbar.pug

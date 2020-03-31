@@ -3,6 +3,7 @@ const path = require('path')
 const boom = require('@hapi/boom')
 const cors = require('cors')
 const debug = require('debug')('app:server')
+const helmet = require('helmet')
 
 const config = require('./config')
 const { logErrors, clientErrorHandler, errorHandler, wrapErrors } = require('./utils/middlewares/errorHandlers')
@@ -12,8 +13,9 @@ const products = require('./routes/views/products')
 const productsApi = require('./routes/api/products')
 const authApi = require('./routes/api/auth')
 
-// Middlewares
 const app = express()
+// Middlewares
+app.use(helmet())
 app.use(express.json())
 app.use(cors())
 

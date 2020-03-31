@@ -5,11 +5,15 @@ const passport = require('passport')
 const validationHandler = require('../../utils/middlewares/validationHandler')
 require('../../utils/auth/strategies/jwt')
 
+const cacheResponse = require('../../utils/cacheResponse')
+const { FIVE_MINUTES_IN_SECONDS, SIXTY_MINUTES_IN_SECONDS } = require('../../utils/time')
+
 module.exports = (app) => {
   app.use('/api/products', router)
   const productService = new ProductService()
 
   router.get('/', async (req, res, next) => {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
     try {
       const { tags } = req.query
       const productsList = await productService.getProducts({ tags })
@@ -26,6 +30,7 @@ module.exports = (app) => {
   router.get('/:id',
     validationHandler({ id: productIdSchema }, "params"),
     async (req, res, next) => {
+      cacheResponse(res, SIXTY_MINUTES_IN_SECONDS)
       try {
         const { id } = req.params
         const productRetrieved = await productService.getProduct({ id })
