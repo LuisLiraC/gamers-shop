@@ -45,6 +45,7 @@ module.exports = (app) => {
     })
 
   router.post('/',
+    passport.authenticate('jwt', { session: false }),
     validationHandler(createProductSchema),
     async (req, res, next) => {
       try {
