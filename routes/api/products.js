@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const ProductService = require('../../services/products')
 const { productIdSchema, productTagSchema, createProductSchema, updateProductSchema } = require('../../utils/schemas/products')
+const passport = require('passport')
 const validationHandler = require('../../utils/middlewares/validationHandler')
+require('../../utils/auth/strategies/jwt')
 
 module.exports = (app) => {
   app.use('/api/products', router)
@@ -54,6 +56,7 @@ module.exports = (app) => {
     })
 
   router.put('/:id',
+    passport.authenticate('jwt', { session: false }),
     validationHandler({ id: productIdSchema }, "params"),
     validationHandler(updateProductSchema),
     async (req, res, next) => {
@@ -72,6 +75,7 @@ module.exports = (app) => {
     })
 
   router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
     validationHandler({ id: productIdSchema }, "params"),
     async (req, res, next) => {
       try {
