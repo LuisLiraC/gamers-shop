@@ -1,5 +1,6 @@
 const config = require('../../config')
 const bcrypt = require('bcryptjs')
+const debug = require('debug')('app:scripts')
 const chalk = require('chalk')
 const MongoLib = require('../../lib/mongo')
 
@@ -29,14 +30,14 @@ async function seedAdmin () {
   try {
     const mongoDb = new MongoLib()
     if(await hasAdminUser(mongoDb)) {
-      console.log(chalk.yellow("Admin user already exists"))
+      debug(chalk.yellow("Admin user already exists"))
       return process.exit(1)
     }
     const adminUser = await createAdminUser(mongoDb)
-    console.log(chalk.green("Admin user created wiht id:", adminUser))
+    debug(chalk.green("Admin user created wiht id:", adminUser))
     return process.exit(0)
   } catch (error) {
-    console.log(chalk.red(error))
+    debug(chalk.red(error))
     process.exit(1)
   }
 }
